@@ -17,7 +17,7 @@ class MyNumber {
         integerPart = radix == 1 ? parts[0].length() : parseLong(parts[0], radix);
 
         fractionalPart = isFloat ? range(0, parts[1].length())
-                .mapToDouble(i -> parseInt(parts[1].substring(i, i + 1), radix) / pow(radix, i + 1))
+                .mapToDouble(i -> parseInt(parts[1].substring(i, i + 1), radix) / pow(radix, i + 1.))
                 .sum() : 0;
     }
 
@@ -32,7 +32,8 @@ class MyNumber {
             double fraction = fractionalPart;
             result.append('.');
             for (int maxDigits = 5; maxDigits > 0 && fraction > 0; --maxDigits) {
-                result.append(Integer.toString((int) (fraction *= radix), radix));
+                fraction *= radix;
+                result.append(Integer.toString((int) fraction, radix));
                 fraction -= (int) fraction;
             }
         }
